@@ -1,4 +1,4 @@
-module github.com/emersion/go-milter
+module github.com/HansK-p/go-milter
 
 go 1.12
 
