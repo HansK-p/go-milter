@@ -102,7 +102,7 @@ func (m *milterSession) Process(msg *Message) (Response, error) {
 		// abort current message and start over
 		m.headers = nil
 		m.macros = nil
-		m.backend = m.server.NewMilter()
+		m.backend.Abort()
 		// do not send response
 		return nil, nil
 
@@ -229,6 +229,7 @@ func (m *milterSession) Process(msg *Message) (Response, error) {
 // HandleMilterComands processes all milter commands in the same connection
 func (m *milterSession) HandleMilterCommands() {
 	defer m.conn.Close()
+	defer m.backend.Close()
 
 	for {
 		msg, err := m.ReadPacket()
@@ -258,7 +259,7 @@ func (m *milterSession) HandleMilterCommands() {
 
 			if !resp.Continue() {
 				// prepare backend for next message
-				m.backend = m.server.NewMilter()
+				m.backend.Abort()
 			}
 		}
 	}

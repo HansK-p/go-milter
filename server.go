@@ -49,6 +49,12 @@ type Milter interface {
 	// Body is called at the end of each message. All changes to message's
 	// content & attributes must be done here.
 	Body(m *Modifier) (Response, error)
+
+	// Abort resets internal to before HELO, but keeps the connection open
+	Abort()
+
+	// Close cleans up anything state related
+	Close()
 }
 
 // NoOpMilter is a dummy Milter implementation that does nothing.
@@ -86,6 +92,12 @@ func (NoOpMilter) BodyChunk(chunk []byte, m *Modifier) (Response, error) {
 
 func (NoOpMilter) Body(m *Modifier) (Response, error) {
 	return RespAccept, nil
+}
+
+func (NoOpMilter) Abort() {
+}
+
+func (NoOpMilter) Close() {
 }
 
 // Server is a milter server.

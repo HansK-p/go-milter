@@ -127,6 +127,12 @@ func (mm *MockMilter) Body(m *Modifier) (Response, error) {
 	return mm.BodyResp, mm.BodyErr
 }
 
+func (mm *MockMilter) Abort() {
+}
+
+func (mm *MockMilter) Close() {
+}
+
 func TestMilterClient_UsualFlow(t *testing.T) {
 	mm := MockMilter{
 		ConnResp:      RespContinue,
