@@ -9,7 +9,7 @@ import (
 	"time"
 
 	"github.com/emersion/go-message/textproto"
-	"github.com/emersion/go-milter"
+	"github.com/HansK-p/go-milter"
 )
 
 func printAction(prefix string, act *milter.Action) {
